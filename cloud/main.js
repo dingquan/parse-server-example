@@ -905,7 +905,7 @@ Parse.Cloud.define("joinPlan", function(request, response) {
             request.user.set("numPlansJoined", numJoined);
 console.log("### sessionToken: " + request.user.getSessionToken());
             var p1 = plan.save();
-            var p2 = request.user.save({useMasterKey: true});
+            var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
             return Parse.Promise.when([p1, p2]).then(function(savedPlan) {
                 console.log("joinPlan plan and user saved successfully");
                 	// send out notifications to other users in the plan
