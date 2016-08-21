@@ -579,46 +579,46 @@ function findUnreviewedUserMatch(forUser) {
     });
 }
                    
-Parse.Cloud.beforeSave("Chat", function(request, response) {
-	var chat = request.object;
-    var fromUser = chat.get("lastMsgFromUser");
-    if (chat.dirty("lastMsg") && (fromUser !== undefined)) {
-        var users = chat.get("users");
-        var otherUsers = users.filter(function(user){
-            return user.id !== fromUser.id;
-        });
+// Parse.Cloud.beforeSave("Chat", function(request, response) {
+// 	var chat = request.object;
+//     var fromUser = chat.get("lastMsgFromUser");
+//     if (chat.dirty("lastMsg") && (fromUser !== undefined)) {
+//         var users = chat.get("users");
+//         var otherUsers = users.filter(function(user){
+//             return user.id !== fromUser.id;
+//         });
 
-        fromUser.fetch().then(function(fromUser){
-            console.log("fetched user: ", fromUser.toJSON());
-            var installQuery = new Parse.Query(Parse.Installation);
-            installQuery.containedIn("owner", otherUsers);
+//         fromUser.fetch().then(function(fromUser){
+//             console.log("fetched user: ", fromUser.toJSON());
+//             var installQuery = new Parse.Query(Parse.Installation);
+//             installQuery.containedIn("owner", otherUsers);
 
-            Parse.Push.send({
-                where: installQuery, // Set our Installation query
-                data: {
-                    alert: fromUser.get("firstName") + ": " + chat.get("lastMsg"),
-                    badge: "Increment",
-                    type: "NEW_CHAT_MSG",
-                    sound: "default",
-                    chatId: chat.id
-                }
-            }, {
-                success: function() {
-                    // Push was successful
-                    console.log("NEW_CHAT_MSG notification sent successfully.");
-                    response.success();
-                },
-                error: function(error) {
-                    // Handle error
-                    console.error(error);
-                    response.success(); // still save the record even if push failed as it's non-critical
-                }
-            });
-        });
-    } else {
-        response.success();
-    }
-});
+//             Parse.Push.send({
+//                 where: installQuery, // Set our Installation query
+//                 data: {
+//                     alert: fromUser.get("firstName") + ": " + chat.get("lastMsg"),
+//                     badge: "Increment",
+//                     type: "NEW_CHAT_MSG",
+//                     sound: "default",
+//                     chatId: chat.id
+//                 }
+//             }, {
+//                 success: function() {
+//                     // Push was successful
+//                     console.log("NEW_CHAT_MSG notification sent successfully.");
+//                     response.success();
+//                 },
+//                 error: function(error) {
+//                     // Handle error
+//                     console.error(error);
+//                     response.success(); // still save the record even if push failed as it's non-critical
+//                 }
+//             });
+//         });
+//     } else {
+//         response.success();
+//     }
+// });
 
 // Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 //     if (request.object.get("email") === "8yet@outlook.com") {
@@ -902,7 +902,7 @@ Parse.Cloud.define("joinPlan", function(request, response) {
             chat.set("users", participants);
             var numJoined = user.get("numPlansJoined")? user.get("numPlansJoined") + 1 : 1;
             request.user.set("numPlansJoined", numJoined);
-console.log("### attempt 2 sessionToken: " + request.user.getSessionToken());
+console.log("### attempt 3 sessionToken: " + request.user.getSessionToken());
             var p1 = plan.save();
             // var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
             return Parse.Promise.when([p1]).then(function(savedPlan) {
