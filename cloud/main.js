@@ -902,7 +902,7 @@ Parse.Cloud.define("joinPlan", function(request, response) {
             chat.set("users", participants);
             var numJoined = user.get("numPlansJoined")? user.get("numPlansJoined") + 1 : 1;
             request.user.set("numPlansJoined", numJoined);
-console.log("### attempt 1 sessionToken: " + request.user.getSessionToken());
+console.log("### attempt 2 sessionToken: " + request.user.getSessionToken());
             var p1 = plan.save();
             // var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
             return Parse.Promise.when([p1]).then(function(savedPlan) {
