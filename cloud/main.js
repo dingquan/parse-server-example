@@ -902,10 +902,10 @@ Parse.Cloud.define("joinPlan", function(request, response) {
             chat.set("users", participants);
             var numJoined = user.get("numPlansJoined")? user.get("numPlansJoined") + 1 : 1;
             request.user.set("numPlansJoined", numJoined);
-console.log("### attempt 3 sessionToken: " + request.user.getSessionToken());
+console.log("### attempt 4 sessionToken: " + request.user.getSessionToken());
             var p1 = plan.save();
             // var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
-            return Parse.Promise.when([p1]).then(function(savedPlan) {
+            return plan.save().then(function(savedPlan) {
                 console.log("joinPlan plan and user saved successfully");
                 	// send out notifications to other users in the plan
                     // also update firebase records to notify apps that the plan has changed
