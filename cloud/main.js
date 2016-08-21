@@ -620,13 +620,13 @@ Parse.Cloud.beforeSave("Chat", function(request, response) {
     }
 });
 
-Parse.Cloud.beforeSave(Parse.User, function(request, response) {
-    if (request.object.get("email") === "8yet@outlook.com") {
-        request.object.set("firstName", "8Yet Team");
-        request.object.set("lastName", "");
-    }
-    response.success();
-});
+// Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+//     if (request.object.get("email") === "8yet@outlook.com") {
+//         request.object.set("firstName", "8Yet Team");
+//         request.object.set("lastName", "");
+//     }
+//     response.success();
+// });
 
 function sendMsgForChat(chat, fromUser, msg) {
     console.log("sendMsgToChat. chatId=" + chat.id + ", fromUser=" + fromUser.id + ", msg=" + msg);
