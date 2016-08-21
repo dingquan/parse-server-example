@@ -877,7 +877,6 @@ Parse.Cloud.afterSave("Plan", function(request) {
 });
 
 Parse.Cloud.define("joinPlan", function(request, response) {
-    console.log("### joingPlan. request=" + JSON.stringify(request));
     var user = request.user;
     var planId = request.params.planId;
     
@@ -905,8 +904,8 @@ Parse.Cloud.define("joinPlan", function(request, response) {
             request.user.set("numPlansJoined", numJoined);
 console.log("### attempt 1 sessionToken: " + request.user.getSessionToken());
             var p1 = plan.save();
-            var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
-            return Parse.Promise.when([p1, p2]).then(function(savedPlan) {
+            // var p2 = request.user.save(null,  {sessionToken: request.user.getSessionToken()});
+            return Parse.Promise.when([p1]).then(function(savedPlan) {
                 console.log("joinPlan plan and user saved successfully");
                 	// send out notifications to other users in the plan
                     // also update firebase records to notify apps that the plan has changed
